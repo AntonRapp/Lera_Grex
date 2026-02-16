@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lera Grex | Певица</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0a0a0a;
+            color: #f0f0f0;
+            line-height: 1.6;
+        }
+
+        /* Затемнённый фон на весь экран (задаётся в hero-секции отдельно) */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero секция */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                         url('https://i.postimg.cc/N0jpz5RM/5228908643644806856.jpg') no-repeat center center/cover;
+            background-attachment: fixed; /* параллакс-эффект */
+            padding: 40px 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .hero-content .genre {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #b3b3b3;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .hero-content p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+            color: #ddd;
+        }
+
+        .btn {
+            display: inline-block;
+            background: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border-radius: 30px;
+            margin: 0 10px;
+        }
+
+        .btn:hover {
+            background: #fff;
+            color: #0a0a0a;
+        }
+
+        /* Общие стили секций */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: #fff;
+            margin: 15px auto 0;
+        }
+
+        /* Блок "Слушать" */
+        .music-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .track-card {
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 300px;
+            transition: transform 0.3s;
+        }
+
+        .track-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .track-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .track-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        /* Яндекс.Музыка плеер (iframe) будет занимать всю ширину карточки */
+        .track-card iframe {
+            width: 100%;
+            height: 130px; /* стандартная высота плеера Яндекс.Музыки для трека */
+            border: none;
+        }
+
+        /* Блок "Смотреть" (YouTube) */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .video-item {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #000;
+            cursor: pointer;
+        }
+
+        .video-item iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s;
+        }
+
+        .video-placeholder:hover {
+            opacity: 0.8;
+        }
+
+        .play-button {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 24px;
+        }
+
+        /* Контакты */
+        .contact {
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
+                        url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+            background-attachment: fixed;
+        }
+
+        .contact h2 {
+            color: #fff;
+        }
+
+        .contact-text {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            color: #ddd;
+        }
+
+        .social-links {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 2rem;
+            transition: color 0.3s;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            color: #aaa;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid #222;
+            color: #777;
+        }
+
+        /* Адаптация */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .hero-content .genre {
+                font-size: 1.2rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .btn {
+                display: block;
+                margin: 10px auto;
+                width: fit-content;
+            }
+        }
+    </style>
+    <!-- Font Awesome для иконок соцсетей -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Hero секция -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>LERA GREX</h1>
+            <div class="genre"> ПОП </div>
+            <p>Мелодичная музыка с искренними текстами.".</p>
+            <div>
+                <a href="#music" class="btn">Слушать</a>
+                <a href="#contact" class="btn">Пригласить</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Блок "Слушать" -->
+    <section id="music">
+        <div class="container">
+            <h2 class="section-title">Слушать</h2>
+            <div class="music-grid" id="ya-music-tracks">
+                <!-- Здесь будут вставлены плееры Яндекс.Музыки -->
+                <!-- Замените data-track-* на свои треки -->
+                <div class="track-card">
+                    <iframe frameborder="0" allow="clipboard-write" style="border:none;width:400px;height:200px;" width="400" height="200" src="https://music.yandex.ru/iframe/album/39733811/track/146194613">Слушайте <a href="https://music.yandex.ru/album/39733811/track/146194613?utm_source=web&utm_medium=copy_link">Taxi Yerevan</a> — <a href="https://music.yandex.ru/artist/3901188">Virab Virabyan</a> на Яндекс Музыке</iframe>
+                    <div class="track-info">
+                        <div class="track-title">Taxi Yerevan</div>
+                    </div>
+                </div>
+                <div class="track-card">
+                    <iframe frameborder="0" allow="clipboard-write" style="border:none;width:400px;height:200px;" width="400" height="200" src="https://music.yandex.ru/iframe/album/34979397/track/135197264">Слушайте <a href="https://music.yandex.ru/album/34979397/track/135197264?utm_source=web&utm_medium=copy_link">Вредная</a> — <a href="https://music.yandex.ru/artist/21066315">LERA GREX</a> на Яндекс Музыке</iframe>
+                    <div class="track-info">
+                        <div class="track-title">Вредная</div>
+                    </div>
+                </div>
+                <div class="track-card">
+                    <iframe frameborder="0" allow="clipboard-write" style="border:none;width:400px;height:200px;" width="400" height="200" src="https://music.yandex.ru/iframe/album/31100872/track/125698912">Слушайте <a href="https://music.yandex.ru/album/31100872/track/125698912?utm_source=web&utm_medium=copy_link">Привет</a> — <a href="https://music.yandex.ru/artist/21066315">LERA GREX</a> на Яндекс Музыке</iframe>
+                    <div class="track-info">
+                        <div class="track-title">Привет</div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="https://music.yandex.ru/artist/21066315?utm_source=web&utm_medium=copy_link" target="_blank" class="btn">Все треки на Яндекс.Музыке</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Блок "Смотреть" (YouTube) -->
+    <section id="video" style="background: #111;">
+        <div class="container">
+            <h2 class="section-title">Смотреть клипы</h2>
+            <div class="video-grid" id="youtube-videos">
+                <!-- Вставьте ID своих видео из YouTube -->
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/pSDusieJhk0" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/9-8Cug1xgeo" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/ВСТАВЬТЕ_ID_3" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video-item">
+                    <iframe src="https://www.youtube.com/embed/ВСТАВЬТЕ_ID_4" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакты / Пригласить -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Пригласить на выступление</h2>
+            <div class="contact-text">
+                Хотите, чтобы Lera Grex выступила на вашем мероприятии?<br>
+                Свяжитесь для обсуждения формата и условий.
+            </div>
+            <a href="mailto:antoshka110895@yandex.ru?subject=Приглашение на выступление" class="btn" style="font-size: 1.2rem; padding: 15px 40px;">Написать письмо</a>
+            
+            <div class="social-links">
+                <a href="https://www.youtube.com/channel/UCr1QHLerQFK-iW2tXf_2zXQ" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.instagram.com/leragrex?igsh=MWxhczI4NHU4M2pyNw==" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="vk.com/leragrex" target="_blank"><i class="fab fa-vk"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Lera Grex. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <!-- Небольшой скрипт для замены плейсхолдеров видео на iframe при клике (опционально) -->
+    <!-- Сейчас видео сразу вставлены iframe, можно оставить так, они грузятся сразу, но это нормально. -->
+    <!-- Если хочешь отложенную загрузку (по клику) — напиши, сделаем. -->
+</body>
+</html>
